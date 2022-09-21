@@ -15,26 +15,40 @@ class NightWriter
     "Created '#{write_path}' contains #{message.length} characters"
   end
 
-  def open_file(filepath)
+  def open_file(filepath = message_path)
     file = File.open(filepath)
-    @message = file.read.chomp
+    @message = file.read.chomp.downcase
     file
   end
 
-  def write_file(filepath, content)
+  def write_file(content, filepath = write_path)
     file = File.open(filepath, 'w')
     file.write(content)
     file.close_write
     file
   end
 
-  def translate_braille(string)
-    translation = ''
-    3.times { |i| translation.concat("#{braille_row(string, i)}\n") }
-    translation.chomp
+  def translate_braille(string = message)
+    translation = []
+    3.times { |i| translation << braille_row(string, i) }
+    translation = row_splitter(translation)
+    translation.join("\n")
   end
 
   def braille_row(string, row)
     string.chars.map { |letter| braille_library[letter][row] }.join
+  end
+  
+  def row_splitter(translation)
+    return translation if translation.none? { |row| row.length > 80 }
+    translation << ''
+    translation.select { |row| row.length > 80 }.each do |row|
+      # edge case - somehow two rows of braille are exactly identical
+
+      translation[translation.index(row)] = row[0..79]
+      translation << row[80..row.length]
+    end
+
+    row_splitter(translation)
   end
 end
