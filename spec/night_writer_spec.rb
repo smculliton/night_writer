@@ -38,4 +38,24 @@ RSpec.describe NightWriter do
     end
   end
 
+  describe '#translate_braille' do 
+    it 'translates a message to braille' do 
+      expect(night_writer.translate_braille('a')).to eq("0.\n..\n..")
+    end 
+    it 'works with multiple letters and spaces' do 
+      expect(night_writer.translate_braille('a bc')).to eq("0...0.00\n....0...\n........")
+    end
+  end
+
+  describe '#braille_row' do 
+    it 'returns a row of braille' do 
+      expect(night_writer.braille_row('a', 0)).to eq('0.')
+    end
+    it 'works with multiple letters and a different row' do 
+      expect(night_writer.braille_row('abc', 1)).to eq('..0...')
+    end
+    it 'translates spaces' do 
+      expect(night_writer.braille_row(' ', 0)).to eq('..')
+    end
+  end
 end
