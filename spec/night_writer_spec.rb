@@ -58,4 +58,17 @@ RSpec.describe NightWriter do
       expect(night_writer.braille_row(' ', 0)).to eq('..')
     end
   end
+
+  describe '#write_file' do 
+    before(:each) do 
+      @content = night_writer.translate_braille('a')
+    end
+    it 'opens a file to write' do 
+      expect(night_writer.write_file(night_writer.write_path, @content)).to be_a File
+    end
+    it 'writes content to the file' do 
+      tested = File.open(night_writer.write_path).read
+      expect(tested).to eq(@content)
+    end
+  end
 end

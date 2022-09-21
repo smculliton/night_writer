@@ -19,6 +19,13 @@ class NightWriter
     @message = File.open(filepath).read.chomp
   end
 
+  def write_file(filepath, content)
+    file = File.open(filepath, 'w')
+    file.write(content)
+    file.close_write
+    file
+  end
+
   def translate_braille(string)
     translation = ''
     3.times { |i| translation.concat("#{braille_row(string, i)}\n") }
