@@ -8,7 +8,7 @@ class NightWriter
   end
 
   def character_statement
-    "Created 'braille.txt' contains #{message.length} characters"
+    "Created '#{write_path}' contains #{message.length} characters"
   end
 
   def open_file(filepath)
