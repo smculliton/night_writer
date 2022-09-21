@@ -16,7 +16,9 @@ class NightWriter
   end
 
   def open_file(filepath)
-    @message = File.open(filepath).read.chomp
+    file = File.open(filepath)
+    @message = file.read.chomp
+    file
   end
 
   def write_file(filepath, content)

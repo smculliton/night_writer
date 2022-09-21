@@ -29,9 +29,9 @@ RSpec.describe NightWriter do
   end
 
   describe '#open_file' do 
-    # it 'opens a file' do 
-    #   expect(night_writer.open_file(night_writer.message_path)).to be_a File
-    # end
+    it 'opens a file' do 
+      expect(night_writer.open_file(night_writer.message_path)).to be_a File
+    end
     it 'saves file contents to message variable' do 
       night_writer.open_file(night_writer.message_path)
       expect(night_writer.message).to eq('hello world')
