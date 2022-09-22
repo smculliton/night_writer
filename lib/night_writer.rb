@@ -12,7 +12,7 @@ class NightWriter
   end
 
   def character_statement
-    "Created '#{write_path}' contains #{message.length} characters"
+    "Created '#{write_path}' containing #{message.length} characters"
   end
 
   def open_file(filepath = message_path)

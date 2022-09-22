@@ -24,7 +24,7 @@ RSpec.describe NightWriter do
   describe '#character_statement' do 
     it 'writes a message' do 
       night_writer.open_file(night_writer.message_path)
-      expect(night_writer.character_statement).to eq("Created 'braille.txt' contains 11 characters")
+      expect(night_writer.character_statement).to eq("Created 'braille.txt' containing 11 characters")
     end
   end
 
