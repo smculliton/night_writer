@@ -8,7 +8,11 @@ class NightReader
   end
 
   def character_statement
-    "Created 'original_message.txt' containing 11 characters."
+    "Created 'original_message.txt' containing #{braille_length} characters"
+  end
+
+  def braille_length
+    @message[0].length / 2
   end
 
   def open_file(filepath = braille_path)

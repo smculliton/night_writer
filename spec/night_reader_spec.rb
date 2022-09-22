@@ -34,6 +34,7 @@ RSpec.describe NightReader do
     end
     it 'saves file contents to message variable' do 
       night_reader.open_file
+      allow(night_reader).to receive(:braille_length).and_return(11)
       expect(night_reader.message).to eq(['0.0.0.0.0....00.0.0.00', '00.00.0..0..00.0000..0', '....0.0.0....00.0.0...'])
     end
   end
