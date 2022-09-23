@@ -22,7 +22,7 @@ RSpec.describe NightReader do
   end
 
   describe '#character_statement' do 
-    xit 'writes a message' do 
+    it 'writes a message' do 
       night_reader.open_file
       expect(night_reader.character_statement).to eq("Created 'original_message.txt' containing 11 characters")
     end
@@ -32,7 +32,7 @@ RSpec.describe NightReader do
     it 'opens a file' do 
       expect(night_reader.open_file).to be_a File
     end
-    xit 'saves file contents to message variable' do 
+    it 'saves file contents to message variable' do 
       night_reader.open_file
       allow(night_reader).to receive(:braille_length).and_return(11)
       expect(night_reader.message).to eq(['0.0.0.0.0....00.0.0.00', '00.00.0..0..00.0000..0', '....0.0.0....00.0.0...'])
@@ -69,6 +69,19 @@ RSpec.describe NightReader do
       expect(night_reader.braille_letter(tested, 0)).to eq(['0.', '00', '..'])
       # asks for fifth letter of 'hello world'
       expect(night_reader.braille_letter(tested, 4)).to eq(['0.','.0','0.'])
+    end
+  end
+  
+  describe '#write_file' do 
+    before(:each) do 
+      @content = night_reader.translate_to_english(['0.', '..', '..'])
+    end
+    it 'opens a file to write' do 
+      expect(night_reader.write_file(@content)).to be_a File
+    end
+    it 'writes content to the file' do 
+      tested = File.open(night_reader.write_path).read
+      expect(tested).to eq(@content)
     end
   end
 end

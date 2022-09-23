@@ -16,12 +16,19 @@ class NightReader
   end
 
   def braille_length
-    @message[0].length / 2
+    translate_to_english.length
   end
 
   def open_file(filepath = braille_path)
     file = File.open(filepath)
     @message = file.readlines.map(&:chomp)
+    file
+  end
+
+  def write_file(content, filepath = write_path)
+    file = File.open(filepath, 'w')
+    file.write(content)
+    file.close_write
     file
   end
 
