@@ -38,4 +38,50 @@ RSpec.describe NightReader do
       expect(night_reader.message).to eq(['0.0.0.0.0....00.0.0.00', '00.00.0..0..00.0000..0', '....0.0.0....00.0.0...'])
     end
   end
+
+  describe '#translate_to_english' do 
+    it 'translates a letter from braille to english' do 
+      night_reader.open_file
+      expect(night_reader.translate_to_english(['0.', '00', '..'])).to eq('h')
+    end
+    it 'translates more than one letter' do 
+      tested = ['0.0.0.0.0....00.0.0.00', '00.00.0..0..00.0000..0', '....0.0.0....00.0.0...']
+      expect(night_reader.translate_to_english(tested)).to eq('hello world')
+    end
+    it 'translates messages that are greater than one line long' do 
+      long_braille_message = [".00.0...000..0000...0.0.0..000..000.00...00.0000.0..0.0.0.0....00.0...0.0.0.00..",
+        "0000.0..00..0.......0.00.000.0..0..0....00....0.0....00..000..0000.0..0....0.0..",
+        "0.......0.00....0.....0.0..00.....0.00....000.0.0...0.00..0...0.......0...0000..",
+        "",
+        "000.00",
+        ".0.000",
+        "..0..."]
+        expected = 'the quick brown fox jumps over the lazy dog'
+        expect(night_reader.translate_to_english(long_braille_message)).to eq(expected)
+    end
+  end
+
+  describe '#braille_letters' do 
+    it 'reorganizes braille array into one braille letter based on an index' do 
+      # tested equals braille for 'hello world'
+      tested = ['0.0.0.0.0....00.0.0.00', '00.00.0..0..00.0000..0', '....0.0.0....00.0.0...']
+      # asks for first letter of 'hello world'
+      expect(night_reader.braille_letter(tested, 0)).to eq(['0.', '00', '..'])
+      # asks for fifth letter of 'hello world'
+      expect(night_reader.braille_letter(tested, 4)).to eq(['0.','.0','0.'])
+    end
+  end
+  
+  describe '#write_file' do 
+    before(:each) do 
+      @content = night_reader.translate_to_english(['0.', '..', '..'])
+    end
+    it 'opens a file to write' do 
+      expect(night_reader.write_file(@content)).to be_a File
+    end
+    it 'writes content to the file' do 
+      tested = File.open(night_reader.write_path).read
+      expect(tested).to eq(@content)
+    end
+  end
 end
