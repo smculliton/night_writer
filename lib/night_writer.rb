@@ -12,12 +12,12 @@ class NightWriter
   end
 
   def character_statement
-    require 'pry'; binding.pry
     "Created '#{write_path}' containing #{message.length} characters"
   end
 
   def open_file(filepath = message_path)
     file = File.open(filepath)
+    require 'pry'; binding.pry
     @message = file.read.chomp.downcase
     file
   end

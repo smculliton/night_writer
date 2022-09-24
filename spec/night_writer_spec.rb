@@ -9,11 +9,9 @@ RSpec.describe NightWriter do
       expect(night_writer).to be_a NightWriter 
     end
     it 'has a message file path' do 
-      # allow(NightWriter).to receive(:ARGV[0]).and_return('message.txt')
       expect(night_writer.message_path).to eq('message.txt')
     end
     it 'has a file path to write to' do 
-      # allow(NightWriter).to receive(:ARGV[0]).and_return('braille.txt')
       expect(night_writer.write_path).to eq('braille.txt')
     end
     it 'starts with no message' do 
@@ -33,7 +31,10 @@ RSpec.describe NightWriter do
       expect(night_writer.open_file(night_writer.message_path)).to be_a File
     end
     it 'saves file contents to message variable' do 
-      allow(file).to receive(:read).and_return('hello world')
+      string = double('hello world')
+      allow(File).to receive(:open).and_return(string)
+      allow(string).to receive(:read).and_return('hello world')
+      
       night_writer.open_file(night_writer.message_path)
       expect(night_writer.message).to eq('hello world')
     end
