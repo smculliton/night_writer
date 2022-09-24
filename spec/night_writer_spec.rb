@@ -23,7 +23,7 @@ RSpec.describe NightWriter do
 
   describe '#character_statement' do 
     it 'writes a message' do 
-      night_writer.open_file
+      allow(night_writer).to receive(:message).and_return('hello world')
       expect(night_writer.character_statement).to eq("Created 'braille.txt' containing 11 characters")
     end
   end
@@ -33,6 +33,7 @@ RSpec.describe NightWriter do
       expect(night_writer.open_file(night_writer.message_path)).to be_a File
     end
     it 'saves file contents to message variable' do 
+      allow(file).to receive(:read).and_return('hello world')
       night_writer.open_file(night_writer.message_path)
       expect(night_writer.message).to eq('hello world')
     end
