@@ -22,7 +22,7 @@ class NightReader < NightTranslator
 
   def translate_to_english(braille_array = message)
     original_message = ''
-    braille_array = combine_lines_of_braille(braille_array) if braille_array.length > 3
+    braille_array = remove_line_breaks(braille_array) if braille_array.length > 3
     (braille_array[0].length / 2).times do |index|
       original_message.concat(braille_library.key(braille_letter(braille_array, index)))
     end
@@ -35,7 +35,7 @@ class NightReader < NightTranslator
     end
   end
 
-  def combine_lines_of_braille(braille_array)
+  def remove_line_breaks(braille_array)
     braille_array.delete('')
     top = ''
     middle = ''

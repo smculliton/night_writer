@@ -80,13 +80,13 @@ RSpec.describe NightWriter do
       tested = ''
       41.times { tested.concat('.0')}
 
-      expect(night_writer.row_splitter([tested])).to eq([tested[0..79], '', tested[80..81]])
+      expect(night_writer.row_splitter([tested])).to eq([tested[0..79], tested[80..81]])
     end
     it 'splits rows twice if they are 160+ characters' do 
       tested = ''
       81.times { tested.concat('.0')}
 
-      expect(night_writer.row_splitter([tested])).to eq([tested[0..79], '', tested[80..159], '', tested[160..161]])
+      expect(night_writer.row_splitter([tested])).to eq([tested[0..79], tested[80..159], tested[160..161]])
     end
     it 'works with multiple rows' do 
       tested1 = ''
@@ -96,7 +96,7 @@ RSpec.describe NightWriter do
       41.times { tested1.concat('.0')}
       41.times { tested2.concat('0.')}
 
-      expect(night_writer.row_splitter(tested)).to eq([tested1[0..79], tested2[0..79], '', tested1[80..81], tested2[80..81]])
+      expect(night_writer.row_splitter(tested)).to eq([tested1[0..79], tested2[0..79], tested1[80..81], tested2[80..81]])
     end
   end
 

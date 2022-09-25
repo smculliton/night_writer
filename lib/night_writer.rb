@@ -9,8 +9,9 @@ class NightWriter < NightTranslator
   def translate_braille(string = message)
     translation = []
     3.times { |i| translation << braille_row(string, i) }
-    translation = row_splitter(translation)
-    translation.join("\n")
+    translation = row_splitter(translation) unless translation.none? { |row| row.length > 80 }
+    translation = insert_line_breaks(translation)
+    translation.join("\n").chomp
   end
 
   def braille_row(string, row)
@@ -18,17 +19,11 @@ class NightWriter < NightTranslator
   end
   
   def row_splitter(translation)
-    return translation if translation.none? { |row| row.length > 80 }
+    translation.map { |row| split_row(row) }.transpose.flatten
+  end
 
-    translation << ''
-    translation.select { |row| row.length > 80 }.each do |row|
-      # edge case - somehow two rows of braille are exactly identical
-
-      translation[translation.index(row)] = row[0..79]
-      translation << row[80..row.length]
-    end
-
-    row_splitter(translation)
+  def split_row(row)
+    row.chars.each_slice(80).to_a.map(&:join)
   end
 
   def insert_line_breaks(array)
