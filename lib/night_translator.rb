@@ -6,6 +6,7 @@ class NightTranslator
   end
 
   def character_statement
+    require 'pry'; binding.pry
     "Created '#{write_path}' containing #{message.length} characters"
   end
 

@@ -2,18 +2,16 @@ require 'rspec'
 require './lib/night_reader'
 
 RSpec.describe NightReader do 
-  let(:night_reader) {NightReader.new({ braille_path: 'braille.txt', write_path: 'original_message.txt' })}
+  let(:night_reader) {NightReader.new({ message_path: 'braille.txt', write_path: 'original_message.txt' })}
 
   describe '#initialize' do 
     it 'exists' do 
       expect(night_reader).to be_a NightReader
     end
     it 'has a braille file path' do 
-      # allow(NightReader).to receive(:ARGV[0]).and_return('message.txt')
-      expect(night_reader.braille_path).to eq('braille.txt')
+      expect(night_reader.message_path).to eq('braille.txt')
     end
     it 'has a file path to write to' do 
-      # allow(NightReader).to receive(:ARGV[0]).and_return('braille.txt')
       expect(night_reader.write_path).to eq('original_message.txt')
     end
     it 'starts with no message' do 

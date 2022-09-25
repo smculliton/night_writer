@@ -1,15 +1,10 @@
 require './lib/braille_library'
+require './lib/night_translator'
 
-class NightReader
-  attr_reader :braille_path, :write_path, :message 
+class NightReader < NightTranslator
+  attr_reader :message_path, :write_path, :message 
 
   include BrailleLibrary
-
-  def initialize(hash = { braille_path: ARGV[0], write_path: ARGV[1] } )
-    @braille_path = hash[:braille_path]
-    @write_path = hash[:write_path]
-    @message = ''
-  end
 
   def character_statement
     "Created '#{write_path}' containing #{braille_length} characters"
@@ -19,17 +14,9 @@ class NightReader
     translate_to_english.length
   end
 
-  def open_file(filepath = braille_path)
+  def open_file(filepath = message_path)
     file = File.open(filepath)
-    # require 'pry'; binding.pry
     @message = file.readlines.map(&:chomp)
-    file
-  end
-
-  def write_file(content, filepath = write_path)
-    file = File.open(filepath, 'w')
-    file.write(content)
-    file.close_write
     file
   end
 
