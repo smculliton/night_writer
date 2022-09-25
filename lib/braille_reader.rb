@@ -1,4 +1,4 @@
-require './lib/braille_library'
+require './lib/modules/braille_library'
 require './lib/braille_translator'
 require './lib/braille_message'
 
@@ -18,6 +18,6 @@ class BrailleReader < BrailleTranslator
 
   def translate_braille_to_english
     braille_message = BrailleMessage.new(message)
-    braille_message.format_message.map { |letter| braille_library.key(letter) }.join
+    braille_message.format_message_to_translate.map { |letter| braille_library.key(letter) }.join
   end
 end
