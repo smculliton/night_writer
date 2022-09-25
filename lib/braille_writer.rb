@@ -2,13 +2,8 @@ require './lib/braille_library'
 require './lib/braille_translator'
 
 class BrailleWriter < BrailleTranslator
-  attr_reader :message_path, :write_path, :message
 
   include BrailleLibrary
-
-  def message_length
-    message.length
-  end
 
   def translate_braille(string = message)
     translation = []

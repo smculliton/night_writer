@@ -64,14 +64,10 @@ RSpec.describe BrailleReader do
     end
   end
 
-  describe '#braille_letters' do 
-    it 'reorganizes braille array into one braille letter based on an index' do 
-      # tested equals braille for 'hello world'
-      tested = ['0.0.0.0.0....00.0.0.00', '00.00.0..0..00.0000..0', '....0.0.0....00.0.0...']
-      # asks for first letter of 'hello world'
-      expect(braille_reader.braille_letter(tested, 0)).to eq(['0.', '00', '..'])
-      # asks for fifth letter of 'hello world'
-      expect(braille_reader.braille_letter(tested, 4)).to eq(['0.','.0','0.'])
+  describe '#split_row_into_letters' do 
+    it 'splits a row of braille into component letters' do 
+      tested = '0.0.0.0.0....00.0.0.00'
+      expect(braille_reader.split_row_into_letters(tested)).to eq(['0.', '0.', '0.', '0.', '0.', '..', '.0', '0.', '0.', '0.', '00'])
     end
   end
   

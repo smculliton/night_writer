@@ -1,4 +1,6 @@
 class BrailleTranslator
+  attr_reader :message_path, :write_path, :message
+
   def initialize(hash)
     @message_path = hash[:message_path]
     @write_path = hash[:write_path]
@@ -7,6 +9,10 @@ class BrailleTranslator
 
   def character_statement
     "Created '#{write_path}' containing #{message_length} characters"
+  end
+
+  def message_length
+    message.length
   end
 
   def open_file(filepath = message_path)

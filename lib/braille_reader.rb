@@ -2,7 +2,6 @@ require './lib/braille_library'
 require './lib/braille_translator'
 
 class BrailleReader < BrailleTranslator
-  attr_reader :message_path, :write_path, :message 
 
   include BrailleLibrary
 
@@ -17,18 +16,15 @@ class BrailleReader < BrailleTranslator
   end
 
   def translate_to_english(braille_array = message)
-    original_message = ''
     braille_array = remove_line_breaks(braille_array) if braille_array.length > 3
-    (braille_array[0].length / 2).times do |index|
-      original_message.concat(braille_library.key(braille_letter(braille_array, index)))
-    end
-    original_message
+    braille_array = braille_array.map { |row| split_row_into_letters(row) }.transpose
+    braille_array.map { |letter| braille_library.key(letter) }.join
   end
 
-  def braille_letter(braille_array, index)
-    braille_array.map do |row|
-      row[index*2..index*2+1]
-    end
+  def split_row_into_letters(row)
+    letters = []
+    row.chars.each_slice(2) { |letter| letters << letter }
+    letters.map(&:join)
   end
 
   def remove_line_breaks(braille_array)

@@ -68,7 +68,6 @@ RSpec.describe BrailleWriter do
     it 'opens a file to write' do 
       expect(braille_writer.write_file(@content)).to be_a File
     end
-    #need to fix this test
     it 'writes content to the file' do 
       tested = File.open(braille_writer.write_path).read
       expect(tested).to eq(@content)
