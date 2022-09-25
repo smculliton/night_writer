@@ -23,7 +23,9 @@ RSpec.describe NightReader do
 
   describe '#character_statement' do 
     it 'writes a message' do 
-      night_reader.open_file
+      # night_reader.open_file
+      braille = ['0.0.0.0.0....00.0.0.00', '00.00.0..0..00.0000..0', '....0.0.0....00.0.0...']
+      allow(night_reader).to receive(:message).and_return(braille)
       expect(night_reader.character_statement).to eq("Created 'original_message.txt' containing 11 characters")
     end
   end
@@ -33,8 +35,12 @@ RSpec.describe NightReader do
       expect(night_reader.open_file).to be_a File
     end
     it 'saves file contents to message variable' do 
+      array = double('hello world')
+      braille = ['0.0.0.0.0....00.0.0.00', '00.00.0..0..00.0000..0', '....0.0.0....00.0.0...']
+      allow(File).to receive(:open).and_return(array)
+      allow(array).to receive(:readlines).and_return(braille)
+
       night_reader.open_file
-      allow(night_reader).to receive(:braille_length).and_return(11)
       expect(night_reader.message).to eq(['0.0.0.0.0....00.0.0.00', '00.00.0..0..00.0000..0', '....0.0.0....00.0.0...'])
     end
   end

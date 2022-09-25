@@ -12,7 +12,7 @@ class NightReader
   end
 
   def character_statement
-    "Created 'original_message.txt' containing #{braille_length} characters"
+    "Created '#{write_path}' containing #{braille_length} characters"
   end
 
   def braille_length
@@ -21,6 +21,7 @@ class NightReader
 
   def open_file(filepath = braille_path)
     file = File.open(filepath)
+    # require 'pry'; binding.pry
     @message = file.readlines.map(&:chomp)
     file
   end

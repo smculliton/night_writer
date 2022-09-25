@@ -17,7 +17,6 @@ class NightWriter
 
   def open_file(filepath = message_path)
     file = File.open(filepath)
-    require 'pry'; binding.pry
     @message = file.read.chomp.downcase
     file
   end
@@ -42,6 +41,7 @@ class NightWriter
   
   def row_splitter(translation)
     return translation if translation.none? { |row| row.length > 80 }
+
     translation << ''
     translation.select { |row| row.length > 80 }.each do |row|
       # edge case - somehow two rows of braille are exactly identical
@@ -51,5 +51,10 @@ class NightWriter
     end
 
     row_splitter(translation)
+  end
+
+  def insert_line_breaks(array)
+    array.each_with_index { |element, index| array.insert(index, '') if index % 4 == 0 }.shift
+    array
   end
 end

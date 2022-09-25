@@ -34,7 +34,7 @@ RSpec.describe NightWriter do
       string = double('hello world')
       allow(File).to receive(:open).and_return(string)
       allow(string).to receive(:read).and_return('hello world')
-      
+
       night_writer.open_file(night_writer.message_path)
       expect(night_writer.message).to eq('hello world')
     end
@@ -97,6 +97,15 @@ RSpec.describe NightWriter do
       41.times { tested2.concat('0.')}
 
       expect(night_writer.row_splitter(tested)).to eq([tested1[0..79], tested2[0..79], '', tested1[80..81], tested2[80..81]])
+    end
+  end
+
+  describe '#insert_line_breaks' do 
+    it 'inserts an empty string every third row' do 
+      tested = ['1','2','3','1','2','3','1','2','3']
+      expected = ['1','2','3','', '1','2','3','','1','2','3']
+      expect(night_writer.insert_line_breaks(['1','2','3','4'])).to eq(['1','2','3', '', '4'])
+      expect(night_writer.insert_line_breaks(tested)).to eq(expected)
     end
   end
 end
