@@ -1,4 +1,4 @@
-class NightTranslator
+class BrailleTranslator
   def initialize(hash = { message_path: ARGV[0], write_path: ARGV[1] } )
     @message_path = hash[:message_path]
     @write_path = hash[:write_path]

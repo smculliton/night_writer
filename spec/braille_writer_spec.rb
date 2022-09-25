@@ -1,76 +1,76 @@
 require 'rspec'
-require './lib/night_writer'
+require './lib/braille_writer'
 
-RSpec.describe NightWriter do
-  let(:night_writer) { NightWriter.new({ message_path: 'message.txt', write_path: 'braille.txt' }) }
+RSpec.describe BrailleWriter do
+  let(:braille_writer) { BrailleWriter.new({ message_path: 'message.txt', write_path: 'braille.txt' }) }
 
   describe '#initialize' do
     it 'exists' do 
-      expect(night_writer).to be_a NightWriter 
+      expect(braille_writer).to be_a BrailleWriter 
     end
     it 'has a message file path' do 
-      expect(night_writer.message_path).to eq('message.txt')
+      expect(braille_writer.message_path).to eq('message.txt')
     end
     it 'has a file path to write to' do 
-      expect(night_writer.write_path).to eq('braille.txt')
+      expect(braille_writer.write_path).to eq('braille.txt')
     end
     it 'starts with no message' do 
-      expect(night_writer.message).to eq('')
+      expect(braille_writer.message).to eq('')
     end
   end
 
   describe '#character_statement' do 
     it 'writes a message' do 
-      allow(night_writer).to receive(:message).and_return('hello world')
-      expect(night_writer.character_statement).to eq("Created 'braille.txt' containing 11 characters")
+      allow(braille_writer).to receive(:message).and_return('hello world')
+      expect(braille_writer.character_statement).to eq("Created 'braille.txt' containing 11 characters")
     end
   end
 
   describe '#open_file' do 
     it 'opens a file' do 
-      expect(night_writer.open_file(night_writer.message_path)).to be_a File
+      expect(braille_writer.open_file(braille_writer.message_path)).to be_a File
     end
     it 'saves file contents to message variable' do 
       string = double('hello world')
       allow(File).to receive(:open).and_return(string)
       allow(string).to receive(:read).and_return('hello world')
 
-      night_writer.open_file(night_writer.message_path)
-      expect(night_writer.message).to eq('hello world')
+      braille_writer.open_file(braille_writer.message_path)
+      expect(braille_writer.message).to eq('hello world')
     end
   end
 
   describe '#translate_braille' do 
     it 'translates a message to braille' do 
-      expect(night_writer.translate_braille('a')).to eq("0.\n..\n..")
+      expect(braille_writer.translate_braille('a')).to eq("0.\n..\n..")
     end 
     it 'works with multiple letters and spaces' do 
-      expect(night_writer.translate_braille('a bc')).to eq("0...0.00\n....0...\n........")
+      expect(braille_writer.translate_braille('a bc')).to eq("0...0.00\n....0...\n........")
     end
   end
 
   describe '#braille_row' do 
     it 'returns a row of braille' do 
-      expect(night_writer.braille_row('a', 0)).to eq('0.')
+      expect(braille_writer.braille_row('a', 0)).to eq('0.')
     end
     it 'works with multiple letters and a different row' do 
-      expect(night_writer.braille_row('abc', 1)).to eq('..0...')
+      expect(braille_writer.braille_row('abc', 1)).to eq('..0...')
     end
     it 'translates spaces' do 
-      expect(night_writer.braille_row(' ', 0)).to eq('..')
+      expect(braille_writer.braille_row(' ', 0)).to eq('..')
     end
   end
 
   describe '#write_file' do 
     before(:each) do 
-      @content = night_writer.translate_braille('a')
+      @content = braille_writer.translate_braille('a')
     end
     it 'opens a file to write' do 
-      expect(night_writer.write_file(@content)).to be_a File
+      expect(braille_writer.write_file(@content)).to be_a File
     end
     #need to fix this test
     it 'writes content to the file' do 
-      tested = File.open(night_writer.write_path).read
+      tested = File.open(braille_writer.write_path).read
       expect(tested).to eq(@content)
     end
   end
@@ -80,13 +80,13 @@ RSpec.describe NightWriter do
       tested = ''
       41.times { tested.concat('.0')}
 
-      expect(night_writer.row_splitter([tested])).to eq([tested[0..79], tested[80..81]])
+      expect(braille_writer.row_splitter([tested])).to eq([tested[0..79], tested[80..81]])
     end
     it 'splits rows twice if they are 160+ characters' do 
       tested = ''
       81.times { tested.concat('.0')}
 
-      expect(night_writer.row_splitter([tested])).to eq([tested[0..79], tested[80..159], tested[160..161]])
+      expect(braille_writer.row_splitter([tested])).to eq([tested[0..79], tested[80..159], tested[160..161]])
     end
     it 'works with multiple rows' do 
       tested1 = ''
@@ -96,7 +96,7 @@ RSpec.describe NightWriter do
       41.times { tested1.concat('.0')}
       41.times { tested2.concat('0.')}
 
-      expect(night_writer.row_splitter(tested)).to eq([tested1[0..79], tested2[0..79], tested1[80..81], tested2[80..81]])
+      expect(braille_writer.row_splitter(tested)).to eq([tested1[0..79], tested2[0..79], tested1[80..81], tested2[80..81]])
     end
   end
 
@@ -104,8 +104,8 @@ RSpec.describe NightWriter do
     it 'inserts an empty string every third row' do 
       tested = ['1','2','3','1','2','3','1','2','3']
       expected = ['1','2','3','', '1','2','3','','1','2','3']
-      expect(night_writer.insert_line_breaks(['1','2','3','4'])).to eq(['1','2','3', '', '4'])
-      expect(night_writer.insert_line_breaks(tested)).to eq(expected)
+      expect(braille_writer.insert_line_breaks(['1','2','3','4'])).to eq(['1','2','3', '', '4'])
+      expect(braille_writer.insert_line_breaks(tested)).to eq(expected)
     end
   end
 end
