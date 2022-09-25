@@ -7,7 +7,7 @@ braille = night_writer.translate_braille
 night_writer.write_file(braille)
 puts night_writer.character_statement
 
-night_reader = NightReader.new({ braille_path: 'braille.txt', write_path: 'original_message.txt'})
+night_reader = NightReader.new({ message_path: 'braille.txt', write_path: 'original_message.txt'})
 night_reader.open_file
 braille = night_reader.translate_to_english
 night_reader.write_file(braille)
