@@ -6,11 +6,7 @@ class BrailleReader < BrailleTranslator
 
   include BrailleLibrary
 
-  def character_statement
-    "Created '#{write_path}' containing #{braille_length} characters"
-  end
-
-  def braille_length
+  def message_length
     translate_to_english.length
   end
 
@@ -37,15 +33,6 @@ class BrailleReader < BrailleTranslator
 
   def remove_line_breaks(braille_array)
     braille_array.delete('')
-    # top = ''
-    # middle = ''
-    # bottom = ''
-    # braille_array.each_with_index do |line, index|
-    #   top.concat(line) if index % 3 == 0
-    #   middle.concat(line) if index % 3 == 1
-    #   bottom.concat(line) if index % 3 == 2
-    # end
-    # [ top, middle, bottom ]
     array = []
     braille_array.each_slice(3) { |tuple| array << tuple }
     array.transpose.map(&:join)

@@ -1,12 +1,12 @@
 class BrailleTranslator
-  def initialize(hash = { message_path: ARGV[0], write_path: ARGV[1] } )
+  def initialize(hash)
     @message_path = hash[:message_path]
     @write_path = hash[:write_path]
     @message = ''
   end
 
   def character_statement
-    "Created '#{write_path}' containing #{message.length} characters"
+    "Created '#{write_path}' containing #{message_length} characters"
   end
 
   def open_file(filepath = message_path)

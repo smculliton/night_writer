@@ -6,6 +6,10 @@ class BrailleWriter < BrailleTranslator
 
   include BrailleLibrary
 
+  def message_length
+    message.length
+  end
+
   def translate_braille(string = message)
     translation = []
     3.times { |i| translation << braille_row(string, i) }
@@ -31,9 +35,3 @@ class BrailleWriter < BrailleTranslator
     array
   end
 end
-
-# night_writer = NightWriter.new
-# night_writer.open_file
-# braille = night_writer.translate_braille
-# night_writer.write_file(braille)
-# puts night_writer.character_statement
