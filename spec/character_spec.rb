@@ -18,6 +18,12 @@ RSpec.describe Character do
       expect(character.to_braille).to eq(['0.', '..', '..'])
     end
   end
+  context 'new line characters' do 
+    let(:character) { Character.new("\n") }
+    it 'can handle a new line character' do 
+      expect(character.to_braille).to eq(["\n", "\n", "\n"])
+    end
+  end
 
   describe '#to_character' do
     let(:character) { Character.new(['0.', '..', '..']) }
