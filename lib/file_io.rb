@@ -7,6 +7,5 @@ class FileIO
   def self.write_file(content, filename)
     file = File.open(filename, 'w')
     file.write(content)
-    file.close_write
   end
 end
