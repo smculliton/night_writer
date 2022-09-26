@@ -16,6 +16,6 @@ class Translator
       row.map(&:to_braille)
     end
     
-    format_braille_to_write_to_file(translation)
+    format_braille_to_write_to_file(translation).chomp
   end
 end

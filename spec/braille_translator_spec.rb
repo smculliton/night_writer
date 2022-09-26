@@ -9,8 +9,8 @@ RSpec.describe BrailleTranslator do
     it 'exists' do 
       expect(translator).to be_a BrailleTranslator
     end
-    it 'has a message' do
-      expect(translator.message).to eq("0.0.00\n..0...\n......")
+    it 'has a message split by lines' do
+      expect(translator.message).to eq(["0.0.00", "..0...", "......"])
     end
   end
 
