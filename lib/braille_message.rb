@@ -1,6 +1,6 @@
 require './lib/character'
 
-class Message
+class BrailleMessage
   attr_reader :message, :message_array
 
   def initialize(message)
@@ -9,12 +9,11 @@ class Message
   end
 
   def create_message_array
-    @message.map do |row|
-      row.chars.map { |char| Character.new(char) }
-    end
+    @message.map { |char| Character.new(char) } if message.class == Array 
   end
 
   def message_length
-    @message_array.length
+    require 'pry'; binding.pry
+    @message_array.sum { |array| array.length }
   end
 end

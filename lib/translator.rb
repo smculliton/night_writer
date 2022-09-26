@@ -1,27 +1,21 @@
 require './lib/message'
+require './lib/modules/formattable'
 
 class Translator
-  attr_reader :message
+  attr_reader :message, :message_length
+
+  include Formattable
 
   def initialize(message)
-    @message = Message.new(message)
+    @message_length = message.length
+    @message = Message.new(add_line_breaks(message))
   end
 
   def translate_english_to_braille
-    message.create_message_array
-
-    translation = message.message_array.group_by do |character| 
-      message.message_array.index(character) / 40
+    translation = @message.message_array.map do |row|
+      row.map(&:to_braille)
     end
     
-    translation.transform_values! do |chars| 
-      chars.map(&:to_braille).transpose.map(&:join)
-    end
-    
-    translation.values.map { |row| row.join("\n") }.join("\n\n")
-  end
-
-  def message_length
-    @message.message_length
+    format_braille_to_write_to_file(translation)
   end
 end
