@@ -1,21 +1,26 @@
 module Formattable
-  def format_braille_to_translate
+  def format_braille_to_translate(message)
+    message = remove_line_breaks(message)
+    split_into_chars(message).transpose
+  end
+
+  def remove_line_breaks(message)
     translation = []
-    @message.delete("")
+    message.delete("")
+    3.times do |i|
+      translation << message.select.with_index { |row, index| index % 3 == i}.join
+    end
+    translation
+  end
 
-    translation << @message.select.with_index { |row, index| index % 3 == 0}.join
-    translation << @message.select.with_index { |row, index| index % 3 == 1}.join
-    translation << @message.select.with_index { |row, index| index % 3 == 2}.join
-
-    translation = translation.map do |array|
+  def split_into_chars(message)
+    message.map do |array|
       row = []
       array.chars.each_slice(2) do |character|
         row << character.join
       end
       row
     end
-
-    translation.transpose
   end
 
   def format_braille_to_write_to_file(translation)

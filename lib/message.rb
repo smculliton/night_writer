@@ -13,8 +13,4 @@ class Message
       row.chars.map { |char| Character.new(char) }
     end
   end
-
-  def message_length
-    @message_array.length
-  end
 end

@@ -13,7 +13,6 @@ class BrailleMessage
   end
 
   def message_length
-    require 'pry'; binding.pry
-    @message_array.sum { |array| array.length }
+    @message_array.length
   end
 end
