@@ -10,7 +10,10 @@ class Character
   end
 
   def to_braille
-    braille = braille_library[character]
-    # { top: braille[0], middle: braille[1], bottom: braille[2] }
+    braille_library[character]
+  end
+
+  def to_character
+    braille_library.key(character)
   end
 end

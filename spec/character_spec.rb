@@ -15,11 +15,15 @@ RSpec.describe Character do
 
   describe '#to_braille' do 
     it 'turns an english character into a braille hash' do 
-      expect(character.to_braille).to eq({
-                                           top: '0.',
-                                           middle: '..',
-                                           bottom: '..'
-                                         })
+      expect(character.to_braille).to eq(['0.', '..', '..'])
+    end
+  end
+
+  describe '#to_character' do
+    let(:character) { Character.new(['0.', '..', '..']) }
+
+    it 'turns a braille into a character' do 
+      expect(character.to_character).to eq('a')
     end
   end
 end

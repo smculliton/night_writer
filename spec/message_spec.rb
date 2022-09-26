@@ -13,11 +13,25 @@ RSpec.describe Message do
     end
   end
 
-  describe 'message_array' do 
+  describe '#create_message_array' do 
     it 'creates an array of character objects' do 
+      message.create_message_array
+
       expect(message.message_array.length).to eq(3)
       expect(message.message_array).to all(be_a Character)
       expect(message.message_array[0].character).to eq('a')
+    end
+  end
+
+  describe '#create_braille_array' do 
+    let(:message) { Message.new([['0.','..','..'], ['0.','0.','..'], ['00','..','..']]) }
+    it 'creates an array of character objects' do 
+      message.create_message_array
+
+      expect(message.message_array.length).to eq(3)
+      expect(message.message_array).to all(be_a Character)
+      expect(message.message_array[0].character).to eq(['0.','..','..'])
+      expect(message.message_array[0].to_character).to eq('a')
     end
   end
 end

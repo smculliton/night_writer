@@ -1,13 +1,17 @@
-require './lib/braille_reader'
+require './lib/braille_translator'
+require './lib/file_io'
 
 class NightReader
-  def self.read(message_path, write_path)
-    braille_reader = BrailleReader.new({ message_path: message_path, write_path: write_path})
-    braille_reader.open_file
-    braille = braille_reader.translate_braille_to_english
-    braille_reader.write_file(braille)
-    puts braille_reader.character_statement
+  def self.write(read_filename, write_filename)
+    message = FileIO.open_file(read_filename)
+    translator = BrailleTranslator.new(message)
+    FileIO.write_file(translator.translate_braille_to_english, write_filename)
+    puts character_statement(write_filename, translator.message_length)
+  end
+
+  def self.character_statement(filename, message_length)
+    "Created '#{filename}' containing #{message_length} characters"
   end
 end
 
-NightReader.read(ARGV[0], ARGV[1])
+NightReader.write(ARGV[0], ARGV[1])

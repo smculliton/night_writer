@@ -1,30 +1,33 @@
+require './lib/message'
+
 class BrailleTranslator
-  attr_reader :message_path, :write_path, :message
+  attr_reader :message, :message_length
 
-  def initialize(hash)
-    @message_path = hash[:message_path]
-    @write_path = hash[:write_path]
-    @message = ''
+  def initialize(message)
+    @message = message.split("\n")
+    @message_length = 0
   end
 
-  def character_statement
-    "Created '#{write_path}' containing #{message_length} characters"
-  end
+  def translate_braille_to_english
 
-  def message_length
-    message.length
-  end
+    translation = []
+    @message.delete("")
 
-  def open_file(filepath = message_path)
-    file = File.open(filepath)
-    @message = file.read.chomp.downcase
-    file
-  end
+    translation << @message.select.with_index { |row, index| index % 3 == 0}.join
+    translation << @message.select.with_index { |row, index| index % 3 == 1}.join
+    translation << @message.select.with_index { |row, index| index % 3 == 2}.join
 
-  def write_file(content, filepath = write_path)
-    file = File.open(filepath, 'w')
-    file.write(content)
-    file.close_write
-    file
+    translation = translation.map do |array|
+      row = []
+      array.chars.each_slice(2) do |character|
+        row << character.join
+      end
+      row
+    end
+
+    new_message = Message.new(translation.transpose)
+    new_message.create_message_array
+    @message_length = new_message.message_length
+    new_message.message_array.map(&:to_character).join
   end
 end
