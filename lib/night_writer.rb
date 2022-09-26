@@ -1,13 +1,17 @@
-require './lib/braille_writer'
+require './lib/translator'
+require './lib/file_io'
 
 class NightWriter
 
-  def self.write(message_path, write_path)
-    braille_writer = BrailleWriter.new({ message_path: message_path, write_path: write_path})
-    braille_writer.open_file
-    braille = braille_writer.translate_braille
-    braille_writer.write_file(braille)
-    puts braille_writer.character_statement
+  def self.write(read_filename, write_filename)
+    message = FileIO.open_file(read_filename)
+    translator = Translator.new(message)
+    FileIO.write_file(translator.translate_english_to_braille, write_filename)
+    puts character_statement(write_filename, translator.message_length)
+  end
+
+  def self.character_statement(filename, message_length)
+    "Created '#{filename}' containing #{message_length} characters"
   end
 
 end

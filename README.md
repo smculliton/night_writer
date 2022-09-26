@@ -1,5 +1,5 @@
 Refactor Ideas
-  - must include a hash somewhere
-  - make every method have a single responsibility
-  - make every class have a single responsibility
+  - make it so message attribute in NightTranslator instantiates a BrailleMessage object
+  - fix all tests
+  - make sure braille message class is tested for format_to_write functions are tested
   
