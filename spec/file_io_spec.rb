@@ -8,7 +8,7 @@ RSpec.describe FileIO do
       allow(File).to receive(:open).and_return(file)
       allow(file).to receive(:read).and_return("The quick brown fox\n")
 
-      expect(FileIO.open_file('fake_file.txt')).to eq('the quick brown fox')
+      expect(FileIO.open_file('fake_file.txt')).to eq('The quick brown fox')
     end
   end
 
