@@ -28,7 +28,16 @@ module Formattable
     formatted.map { |row| row.join }.join("\n")
   end
 
+  def format_chars_to_translate(message)
+    add_line_breaks(reformat_numbers(message))
+  end
+
   def add_line_breaks(message)
     message.chars.each_slice(40).map { |slice| slice.join.concat("\n") }
+  end
+
+  def reformat_numbers(message)
+    num_hash = (('1'..'9').to_a << '0').zip(('a'..'j').to_a).to_h
+    message.chars.map { |char| ('1'..'9').include?(char) ? '#' + num_hash[char] : char }.join
   end
 end

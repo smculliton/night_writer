@@ -59,4 +59,19 @@ RSpec.describe Formattable do
       expect(dummy_class.add_line_breaks(tested)).to eq(expected)
     end
   end
+
+  describe '#reformat numbers' do 
+    it 'replaces numbers with # and corresponding braille letter' do 
+      expect(dummy_class.reformat_numbers('1')).to eq('#a')
+      expect(dummy_class.reformat_numbers('234')).to eq('#b#c#d')
+    end
+  end
+
+  describe '#format_chars_to_translate' do 
+    it 'formats a message string to be translated' do 
+      expected = ["abc #a#b#c\n"]
+
+      expect(dummy_class.format_chars_to_translate('abc 123')).to eq(expected)
+    end
+  end
 end

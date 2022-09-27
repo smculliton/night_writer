@@ -8,7 +8,7 @@ class Translator
 
   def initialize(message)
     @message_length = message.length
-    @message = Message.new(add_line_breaks(message))
+    @message = Message.new(format_chars_to_translate(message))
   end
 
   def translate_english_to_braille
