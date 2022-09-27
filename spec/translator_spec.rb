@@ -16,7 +16,7 @@ RSpec.describe Translator do
 
   describe '#translate_english_to_braille' do 
     it 'translates english into braille' do 
-      expected = "0.0.00\n..0...\n......"
+      expected = "O.O.OO\n..O...\n......"
       expect(translator.translate_english_to_braille).to eq(expected)
     end
   end
