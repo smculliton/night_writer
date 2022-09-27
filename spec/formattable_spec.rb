@@ -74,4 +74,10 @@ RSpec.describe Formattable do
       expect(dummy_class.format_chars_to_translate('abc 123')).to eq(expected)
     end
   end
+
+  describe '#change letters to numbers' do 
+    it 'replaces a "#letter" with a corresponding number' do 
+      expect(dummy_class.change_letters_to_numbers('abc #a#b#c')).to eq('abc 123')
+    end
+  end
 end
