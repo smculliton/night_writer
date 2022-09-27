@@ -8,25 +8,16 @@ RSpec.describe Translator do
     it 'exists' do 
       expect(translator).to be_a Translator
     end
-    it 'has a message' do
+    it 'has a message in an array with line breaks' do
       expect(translator.message).to be_a Message
-      expect(translator.message.message).to eq('abc')
+      expect(translator.message.message).to eq(["abc\n"])
     end
   end
 
   describe '#translate_english_to_braille' do 
     it 'translates english into braille' do 
-      expected = "0.0.00\n..0...\n......"
+      expected = "O.O.OO\n..O...\n......"
       expect(translator.translate_english_to_braille).to eq(expected)
-    end
-  end
-
-  describe '#translate_braille_to_english' do 
-    message = "0.0.0.0.0....00.0.0.00\n0.0.0.0.0....00.0.0.00\n0.0.0.0.0....00.0.0.00"
-    let(:translator) { Translator.new(message) }
-
-    it 'translates braille message into english characters' do 
-      expect(translator.translate_braille_to_english).to eq('hello world')
     end
   end
 end

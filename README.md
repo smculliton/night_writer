@@ -1,5 +1,4 @@
-Refactor Ideas
-  - make it so message attribute in NightTranslator instantiates a BrailleMessage object
-  - fix all tests
-  - make sure braille message class is tested for format_to_write functions are tested
-  
+To Dos:
+
+- make FileIO test more robust
+- numbers: convert a (1) in the string to be translated to a (#a), then make a (#) character in the braille library
