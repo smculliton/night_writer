@@ -7,6 +7,6 @@ class BrailleMessage < Message
   end
 
   def message_length
-    @message_array.length
+    @message_array.select { |char| char.to_character != '#' }.length
   end
 end

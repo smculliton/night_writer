@@ -7,7 +7,7 @@ class Translator
   include Formattable
 
   def initialize(message)
-    @message_length = message.length
+    @message_length = message.delete("\n").length
     @message = Message.new(format_chars_to_translate(message.delete("\n")))
   end
 
