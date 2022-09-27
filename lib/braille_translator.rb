@@ -15,6 +15,7 @@ class BrailleTranslator
     new_message = BrailleMessage.new(format_braille_to_translate(@message))
     @message_length = new_message.message_length
     message_to_write = new_message.message_array.map(&:to_character).join
-    change_letters_to_numbers(message_to_write)
+    require 'pry'; binding.pry
+    add_line_breaks(change_letters_to_numbers(message_to_write)).join
   end
 end
