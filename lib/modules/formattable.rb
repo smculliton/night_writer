@@ -6,9 +6,9 @@ module Formattable
 
   def remove_line_breaks(message)
     translation = []
-    message.delete("")
+    message.delete('')
     3.times do |i|
-      translation << message.select.with_index { |row, index| index % 3 == i}.join
+      translation << message.select.with_index { |_row, index| index % 3 == i}.join
     end
     translation
   end
